@@ -11,7 +11,11 @@ import Button from "@material-ui/core/Button";
 import LoginComponent from "./components/login.component";
 import DashboardComponent from "./components/dashboard.component";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import  {withRouter} from 'react-router-dom';
 import ProfileComponent from "./components/profile.component";
+import middlecomponent from "./middlecomponent"
+import RegisterComponent from "./components/Register.component";
+
 class Application extends Component{
 
   constructor(props){
@@ -45,10 +49,13 @@ class Application extends Component{
                  <MenuIcon />
                </IconButton>
                <Typography variant="h6">
-                 <span> <Link to={'/'}> BookFace</Link> </span>
+                 <span> <Link to={'/profile'}> BookFace</Link> </span>
                </Typography>
                <Button color="inherit"><Link to={'/profile'}> Profile </Link></Button>
-               <Button color="inherit"><Link to={'/profile'}> Log Out </Link></Button>
+               <Button color="inherit"><Link to={'/loggg'} >
+                  Log Out
+                </Link>
+                </Button>
              </Toolbar>
            </AppBar>
            <Switch>
@@ -56,12 +63,14 @@ class Application extends Component{
              {/*<Route exact path={"/login"} component={LoginComponent}/>*/}
              <Route exact path={"/profile"} component={ProfileComponent}/>
              <Route exact path={"/dashboard"} component={DashboardComponent}/>
+             <Route exact path={"/loggg"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}/>)}/>
            </Switch>
          </div>
        </Router>
      </div>
     }
     else{
+      console.log("-------------------------------->" + "I am in else case");
       return <div>
         <Router>
           <div>
@@ -71,16 +80,17 @@ class Application extends Component{
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6">
-                  <span> <Link to={'/'}> BookFace</Link> </span>
+                  <span> <Link to={'/'}> BookFace </Link> </span>
                 </Typography>
                 <Button color="inherit"><Link to={'/login'}> Login </Link></Button>
               </Toolbar>
             </AppBar>
             <Switch>
-              <Route exact path={"/"} component={HomeComponent}/>
+              <Route exact path={"/login"} component={HomeComponent}/>
               {/*<Route exact path={"/login"} component={LoginComponent}/>*/}
-              <Route exact path={"/login"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}/>)}/>
+              <Route exact path={"/"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}/>)}/>
               <Route exact path={"/dashboard"} component={DashboardComponent}/>
+              <Route exact path= {"/Register"} component={RegisterComponent}/>
             </Switch>
           </div>
         </Router>

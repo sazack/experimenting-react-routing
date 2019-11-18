@@ -1,6 +1,7 @@
 import React, {Component, ReactPropTypes} from 'react';
 import { Input, Button } from '@material-ui/core'
-
+import {withRouter} from 'react-router-dom';
+import Axios from 'axios';
 class LoginComponent extends Component{
     constructor(props){
 
@@ -17,18 +18,33 @@ class LoginComponent extends Component{
         this.checkAuthStatus = this.checkAuthStatus.bind(this);
 
     }
-    handleAuthUser(){
+    async handleAuthUser(){
         const {username, password} = this.state;
-        if(username === 'admin' && password === 'admin'){
+        let response
+        const data = {
+            username: username,
+            password: password
+        }
+        try{
+         response = await Axios.post('/api/auth', data);
+         if(response.status === 200){
             alert("Login successful");
             this.props.history.push('/dashboard');
             this.setState({loggedIn:true});
             this.props.checkAuthStatus(true)
             // this.props.checkAuthStatus(true);
         }
-        else {
+        else if(response.status === 400) {
             alert("Username/Password Invalid")
         }
+        }
+        catch(error){
+            alert("Username/Password Invalid");
+        }
+        
+        
+        
+        
         // console.log(username,password);
     }
 
@@ -65,9 +81,13 @@ class LoginComponent extends Component{
                     placeholder="Password"
                 />
                 <Button color="primary" onClick={this.handleAuthUser}> Submit </Button>
+                <Button color="primary" onClick={()=> {
+                    console.log("I am in register click button");
+                    this.props.history.push('/Register');
+                    }}> Register </Button>
             </form>
         </div>)
     }
 }
 
-export default LoginComponent;
+export default withRouter(LoginComponent);
