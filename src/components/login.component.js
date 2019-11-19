@@ -29,7 +29,7 @@ class LoginComponent extends Component{
          response = await Axios.post('/api/auth', data);
          if(response.status === 200){
             alert("Login successful");
-            this.props.history.push('/dashboard');
+            this.props.history.push('/dashboard', {userName: username});
             this.setState({loggedIn:true});
             this.props.checkAuthStatus(true)
             // this.props.checkAuthStatus(true);

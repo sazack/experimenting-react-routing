@@ -49,7 +49,7 @@ class Application extends Component{
                  <MenuIcon />
                </IconButton>
                <Typography variant="h6">
-                 <span> <Link to={'/profile'}> BookFace</Link> </span>
+                 <span> <Link to={'/dashboard'}> BookFace</Link> </span>
                </Typography>
                <Button color="inherit"><Link to={'/profile'}> Profile </Link></Button>
                <Button color="inherit"><Link to={'/loggg'} >
@@ -82,7 +82,7 @@ class Application extends Component{
                 <Typography variant="h6">
                   <span> <Link to={'/'}> BookFace </Link> </span>
                 </Typography>
-                <Button color="inherit"><Link to={'/login'}> Login </Link></Button>
+                <Button color="inherit"><Link to={'/'}> Login </Link></Button>
               </Toolbar>
             </AppBar>
             <Switch>

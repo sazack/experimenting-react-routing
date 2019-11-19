@@ -3,6 +3,7 @@ const app = express()
 
 const Mongoose = require('mongoose')
 const users = require('./users.js')
+const Posts = require('./Posts.js')
 
 const db = Mongoose.connect('mongodb://localhost:27017/bface', {useNewUrlParser: true})
 
@@ -47,7 +48,31 @@ app.post("/api/auth", async(req,res) =>{
         console.log("I am here in else");
         return res.sendStatus(400);
     } 
-}
-)
+})
+
+app.post("/api/pos", async(req,res) => {
+     console.log("A request came in with the body"+ JSON.stringify(req.body))
+      const {user, post, likes, dislikes} = req.body
+      try{
+          await Posts.create({user: user, post: post, likes: likes, dislikes: dislikes})
+          return res.sendStatus(200);
+      }
+      catch (error){
+          return res.sendStatus(400);
+      }
+})
+
+app.get("/api/load", async(req, res) =>{
+        console.log("I am here in get all");
+        try{
+            const users = await Posts.find({});
+            return res.send(users).status(200);
+        }
+        catch(error){
+            console.log(error.message);
+        }
+})
+
+
 const port = 4000
 app.listen(port, () => console.log("listening to port at 4000"))
