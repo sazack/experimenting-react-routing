@@ -25,8 +25,10 @@ class Application extends Component{
     console.log("---->>>>>",this.props);
 
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
+    this.getuser = this.getuser.bind(this);
     this.state ={
-      loggedIn :false
+      loggedIn :false,
+      username : ''
     }
 
   }
@@ -35,12 +37,20 @@ class Application extends Component{
     this.setState({loggedIn:true});
   }
 
+  getuser(val){
+    console.log("Username is: "+ val);
+    this.setState({username: val})
+  }
+
 
   render(){
 
     const {loggedIn} = this.state;
+    const {username} = this.state;
     if(loggedIn){
-     return <div>
+      console.log("I am in logged in state");
+      console.log("The username is: " + username);
+           return <div>
        <Router>
          <div>
            <AppBar position="static">
@@ -61,9 +71,14 @@ class Application extends Component{
            <Switch>
              <Route exact path={"/"} component={DashboardComponent}/>
              {/*<Route exact path={"/login"} component={LoginComponent}/>*/}
-             <Route exact path={"/profile"} component={ProfileComponent}/>
+             <Route exact path={"/profile"} render = {(props) => <ProfileComponent {...props} username= {username} />} />
              <Route exact path={"/dashboard"} component={DashboardComponent}/>
-             <Route exact path={"/loggg"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}/>)}/>
+             <Route exact path={"/loggg"} render={props=>(
+             <LoginComponent 
+             {...props} 
+             checkAuthStatus = {this.checkAuthStatus} 
+             getuser = {this.getuser}/>
+             )}/>
            </Switch>
          </div>
        </Router>
@@ -88,7 +103,7 @@ class Application extends Component{
             <Switch>
               <Route exact path={"/login"} component={HomeComponent}/>
               {/*<Route exact path={"/login"} component={LoginComponent}/>*/}
-              <Route exact path={"/"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}/>)}/>
+              <Route exact path={"/"} render={props=>(<LoginComponent {...props} checkAuthStatus = {this.checkAuthStatus}  getuser = {this.getuser}/>)}/>
               <Route exact path={"/dashboard"} component={DashboardComponent}/>
               <Route exact path= {"/Register"} component={RegisterComponent}/>
             </Switch>

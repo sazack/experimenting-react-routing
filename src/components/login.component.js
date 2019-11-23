@@ -16,6 +16,7 @@ class LoginComponent extends Component{
         this.handleAuthUser = this.handleAuthUser.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.checkAuthStatus = this.checkAuthStatus.bind(this);
+        this.getuser = this.getuser.bind(this);
 
     }
     async handleAuthUser(){
@@ -32,6 +33,7 @@ class LoginComponent extends Component{
             this.props.history.push('/dashboard', {userName: username});
             this.setState({loggedIn:true});
             this.props.checkAuthStatus(true)
+            this.props.getuser(username)
             // this.props.checkAuthStatus(true);
         }
         else if(response.status === 400) {
@@ -58,6 +60,11 @@ class LoginComponent extends Component{
     checkAuthStatus(){
         console.log(this.state.loggedIn)
         return this.state.loggedIn;
+    }
+
+    getuser(){
+        console.log(this.state.username);
+        return this.state.username;
     }
 
     render() {
